@@ -17,7 +17,7 @@ function contarIngredientes(meal) {
   return c;
 }
 
-// ---- Categorías (pills de filtro) ----
+// Categorías (pills de filtro)
 function cargarCategorias() {
   const url = API + "categories.php";
 
@@ -54,7 +54,7 @@ function cargarCategorias() {
     .catch(error => console.log(error));
 }
 
-// ---- Recetas por categoría (o todas) ----
+// Recetas por categoría (o todas)
 function verCategoria(cat) {
   const contador = document.getElementById("contador");
   contador.innerHTML = "Cargando recetas…";
@@ -70,7 +70,7 @@ function verCategoria(cat) {
     });
 }
 
-// ---- Búsqueda (por nombre de platillo Y por ingrediente, a la vez) ----
+// Búsqueda (por nombre de platillo Y por ingrediente)
 function buscarRecetas(term) {
   const contador = document.getElementById("contador");
   contador.innerHTML = "Buscando…";
@@ -86,7 +86,6 @@ function buscarRecetas(term) {
       const mealsPorNombre = resNombre.meals || [];
       const mealsPorIngrediente = resIngrediente.meals || [];
 
-      // Evitamos duplicados: si ya salió en la búsqueda por nombre, no lo repetimos
       const idsYaVistos = new Set(mealsPorNombre.map(m => m.idMeal));
       const soloPorIngrediente = mealsPorIngrediente.filter(m => !idsYaVistos.has(m.idMeal));
 
@@ -95,8 +94,6 @@ function buscarRecetas(term) {
         return;
       }
 
-      // filter.php?i= solo trae id, nombre e imagen; pedimos el detalle completo
-      // de cada uno para poder mostrar categoría, país y cantidad de ingredientes
       Promise.all(
         soloPorIngrediente.map(m =>
           fetch(API + "lookup.php?i=" + m.idMeal).then(respuesta => respuesta.json())
@@ -117,7 +114,6 @@ function buscarRecetas(term) {
     });
 }
 
-// ---- Pintar la grilla de tarjetas ----
 function renderRecetas(meals) {
   recetasActuales = meals;
 
@@ -175,7 +171,7 @@ function ordenarYPintar() {
   });
 }
 
-// ---- Modal de detalle ----
+// Modal de detalle
 function verDetalle(id) {
   const modal = document.getElementById("modal");
   modal.innerHTML = `<p class="empty">Cargando receta…</p>`;
@@ -237,7 +233,7 @@ document.addEventListener("keydown", e => {
   if (e.key === "Escape") cerrarModal();
 });
 
-// ---- Eventos de búsqueda y orden ----
+// Eventos de búsqueda y orden
 let temporizadorBusqueda;
 document.getElementById("buscar").addEventListener("input", e => {
   clearTimeout(temporizadorBusqueda);
@@ -252,6 +248,5 @@ document.getElementById("ordenar").addEventListener("change", () => {
   if (recetasActuales.length) ordenarYPintar();
 });
 
-// ---- Arranque ----
 cargarCategorias();
 verCategoria("");
