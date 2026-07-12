@@ -6,6 +6,6 @@ Página web para buscar y explorar recetas usando la API de TheMealDB.
 
 ## Archivos
 - `index.html` — estructura de la página
-- `style.css` — estilos (incluye diseño responsive para celular)
-- `app.js` — lógica: búsqueda, filtros por categoría, modal de detalle
+- `style.css` — estilos
+- `app.js` — lógica: búsqueda, filtros por categoría, modal de detalle, uso de API
 - `Logo.jpg` — logo del sitio
